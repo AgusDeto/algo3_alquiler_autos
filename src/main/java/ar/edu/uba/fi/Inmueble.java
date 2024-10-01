@@ -1,6 +1,6 @@
 package ar.edu.uba.fi;
 
-public abstract class Inmueble {
+public abstract class Inmueble implements Alquilable{
 
     protected String direccion;
 

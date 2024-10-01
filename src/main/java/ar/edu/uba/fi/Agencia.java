@@ -3,26 +3,16 @@ package ar.edu.uba.fi;
 import java.util.ArrayList;
 
 public class Agencia {
-    private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
+    private ArrayList<Alquilable> alquilables = new ArrayList<>();
     private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-    private ArrayList<Inmueble> inmuebles = new ArrayList<Inmueble>();
 
-    public void registrarVehiculo(Vehiculo unVehiculo) {
-        for(Vehiculo vehiculo: vehiculos){
-            if(vehiculo.esIgualA(unVehiculo)){
-                throw new VehiculoYaRegistradoException();
+    public void registrarAlquilable(Alquilable unAlquilable) {
+        for(Alquilable alquilable: alquilables){
+            if(alquilable.esIgualA(unAlquilable)){
+                throw new AlquilableYaRegistradoException();
             }
         }
-        vehiculos.add(unVehiculo);
-    }
-
-    public void registrarInmueble(Inmueble unInmueble) {
-        for(Inmueble inmueble: inmuebles){
-            if(inmueble.esIgualA(unInmueble)){
-                throw new InmuebleYaRegistradoException();
-            }
-        }
-        inmuebles.add(unInmueble);
+        alquilables.add(unAlquilable);
     }
 
     public void registrarCliente(Cliente cliente) {
@@ -38,36 +28,20 @@ public class Agencia {
         throw new ClienteNoRegistradoException();
     }
 
-    public void registrarAlquilerVehiculo(Cliente unCliente, Vehiculo unVehiculo, int dias) {
+    public void registrarAlquiler(Cliente unCliente, Alquilable unAlquilable, int dias) {
         Cliente cliente = buscarCliente(unCliente);
-        Vehiculo vehiculo = buscarVehiculo(unVehiculo);
+        Alquilable alquilable = buscarAlquilable(unAlquilable);
 
-        cliente.registrarAlquilerVehiculo(vehiculo, dias);
+        cliente.registrarAlquiler(alquilable, dias);
     }
 
-    public void registrarAlquilerInmueble(Cliente unCliente, Inmueble unInmueble, int dias) {
-        Cliente cliente = buscarCliente(unCliente);
-        Inmueble inmueble = buscarInmueble(unInmueble);
-
-        cliente.registrarAlquilerInmueble(inmueble, dias);
-    }
-
-    private Vehiculo buscarVehiculo(Vehiculo unVehiculo) {
-        for(Vehiculo vehiculo: vehiculos){
-            if(vehiculo.esIgualA(unVehiculo)){
-                return vehiculo;
+    private Alquilable buscarAlquilable(Alquilable unAlquilable) {
+        for(Alquilable alquilable : alquilables){
+            if(alquilable.esIgualA(unAlquilable)){
+                return alquilable;
             }
         }
-        throw new VehiculoNoRegistradoException();
-    }
-
-    private Inmueble buscarInmueble(Inmueble unInmueble) {
-        for (Inmueble inmueble : inmuebles) {
-            if (inmueble.esIgualA(unInmueble)) {
-                return inmueble;
-            }
-        }
-        throw new InmuebleNoRegistradoException();
+        throw new AlquilableNoRegistradoException();
     }
 
     private Cliente buscarCliente(Cliente unCliente) {
