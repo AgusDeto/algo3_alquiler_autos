@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Agencia {
     private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
     private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    private ArrayList<Inmueble> inmuebles = new ArrayList<Inmueble>();
 
     public void registrarVehiculo(Vehiculo unVehiculo) {
         for(Vehiculo vehiculo: vehiculos){
@@ -13,6 +14,15 @@ public class Agencia {
             }
         }
         vehiculos.add(unVehiculo);
+    }
+
+    public void registrarInmueble(Inmueble unInmueble) {
+        for(Inmueble inmueble: inmuebles){
+            if(inmueble.esIgualA(unInmueble)){
+                throw new InmuebleYaRegistradoException();
+            }
+        }
+        inmuebles.add(unInmueble);
     }
 
     public void registrarCliente(Cliente cliente) {
@@ -28,11 +38,18 @@ public class Agencia {
         throw new ClienteNoRegistradoException();
     }
 
-    public void registrarAlquiler(Cliente unCliente, Vehiculo unVehiculo, int dias) {
+    public void registrarAlquilerVehiculo(Cliente unCliente, Vehiculo unVehiculo, int dias) {
         Cliente cliente = buscarCliente(unCliente);
         Vehiculo vehiculo = buscarVehiculo(unVehiculo);
 
-        cliente.registrarAlquiler(vehiculo, dias);
+        cliente.registrarAlquilerVehiculo(vehiculo, dias);
+    }
+
+    public void registrarAlquilerInmueble(Cliente unCliente, Inmueble unInmueble, int dias) {
+        Cliente cliente = buscarCliente(unCliente);
+        Inmueble inmueble = buscarInmueble(unInmueble);
+
+        cliente.registrarAlquilerInmueble(inmueble, dias);
     }
 
     private Vehiculo buscarVehiculo(Vehiculo unVehiculo) {
@@ -42,6 +59,15 @@ public class Agencia {
             }
         }
         throw new VehiculoNoRegistradoException();
+    }
+
+    private Inmueble buscarInmueble(Inmueble unInmueble) {
+        for (Inmueble inmueble : inmuebles) {
+            if (inmueble.esIgualA(unInmueble)) {
+                return inmueble;
+            }
+        }
+        throw new InmuebleNoRegistradoException();
     }
 
     private Cliente buscarCliente(Cliente unCliente) {
@@ -60,4 +86,6 @@ public class Agencia {
         }
         return suma;
     }
+
+
 }
